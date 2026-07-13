@@ -1,0 +1,38 @@
+-- ============================================
+-- MIGRACIÓN: contenido editable desde /admin/contenido
+-- ============================================
+-- Añade las claves de configuracion_web que usa el nuevo editor de
+-- contenido del panel de admin (hero, secciones de la home, cabeceras y
+-- listas de Historia/Contacto/Socios/Instalaciones/Equipos).
+--
+-- Seguro de ejecutar sobre una base de datos ya existente: usa
+-- ON CONFLICT (clave) DO NOTHING, así que si alguna de estas claves ya
+-- existe (por ejemplo porque ya se guardó algo desde el admin) esa fila NO
+-- se toca ni se sobrescribe. Solo inserta las que todavía no existan.
+--
+-- Nota: aunque no ejecutes este archivo, la web funciona igual — si estas
+-- claves no existen en la tabla, el código usa internamente estos mismos
+-- valores por defecto. Este script solo sirve para dejarlas ya creadas en
+-- la base de datos (por ejemplo, para poder verlas/editarlas de inmediato
+-- en el SQL Editor de Supabase sin pasar antes por el admin).
+--
+-- Cómo ejecutarlo: pega este archivo entero en el SQL Editor de Supabase
+-- (Dashboard → SQL Editor → New query) y dale a Run.
+
+INSERT INTO public.configuracion_web (clave, valor, tipo, descripcion) VALUES
+  ('home_hero', '{"tituloLinea1":"Pasión","tituloLinea2":"por el","tituloLinea3":"Fútbol","descripcion":"Décadas formando futbolistas y personas. El club de referencia del fútbol base en la comarca.","imagenFondo":"/images/noticias-bg.jpg","ctaPrimarioTexto":"CONOCE EL CLUB","ctaPrimarioUrl":"/historia","ctaSecundarioTexto":"ÚNETE AL CLUB","ctaSecundarioUrl":"/socios"}', 'json', 'Contenido de la sección Hero de la home'),
+  ('home_about', '{"badge":"Sobre nosotros","titulo":"Pasión por el Fútbol","parrafo1":"Un club de pueblo, una cantera con valores y una forma de entender el fútbol desde el compromiso, el esfuerzo y el sentimiento de equipo.","parrafo2":"El C.D. Unión Deportiva Villar del Olmo forma parte de la vida deportiva del municipio desde hace décadas. Un club cercano, construido alrededor del fútbol base, el esfuerzo diario y el compromiso de familias, jugadores y entrenadores.","parrafo3":"Más que competir, el objetivo siempre ha sido formar. Formar futbolistas, pero sobre todo personas que entiendan el valor del compañerismo, el respeto y la pertenencia a un equipo.","enlaceTexto":"Conoce nuestra historia","enlaceUrl":"/historia"}', 'json', 'Contenido de la sección Sobre nosotros de la home'),
+  ('home_cta', '{"badge":"Inscripciones abiertas","tituloLinea1":"ÚNETE A LA","tituloLinea2":"FAMILIA","descripcion":"Inscripciones abiertas para todas las categorías. Ven a conocernos y forma parte de nuestro proyecto deportivo.","botonPrimarioTexto":"HAZTE SOCIO","botonPrimarioUrl":"/socios","botonSecundarioTexto":"CONTACTAR","botonSecundarioUrl":"/contacto"}', 'json', 'Contenido de la sección Únete (CTA) de la home'),
+  ('pagina_historia', '{"tituloLinea1":"NUESTRA","tituloLinea2":"HISTORIA","subtitulo":"Décadas de pasión, esfuerzo y fútbol en el corazón de Madrid.","clubBadge":"Historia del Club","clubTitulo":"Décadas formando futbolistas","clubParrafo1":"El C.D. Unión Deportiva Villar del Olmo nació con la idea de acercar el fútbol a los jóvenes del municipio y crear un espacio donde competir, aprender y crecer dentro de un ambiente de equipo.","clubParrafo2":"Con el paso de los años, el club se ha convertido en un punto de encuentro para muchas familias de Villar del Olmo y alrededores. Por sus equipos han pasado generaciones de jugadores que han defendido sus colores con ilusión, esfuerzo y respeto por este deporte.","clubParrafo3":"Hoy, el club mantiene esa misma esencia: seguir impulsando el fútbol base, cuidar la cantera y representar al pueblo dentro y fuera del campo.","puebloBadge":"Historia del Pueblo","puebloTitulo":"Villar del Olmo","puebloParrafo1":"Villar del Olmo es un municipio del este de la Comunidad de Madrid, situado en un entorno natural que conserva el carácter tranquilo y cercano de los pueblos de la comarca. Su historia está ligada a la repoblación medieval y al desarrollo de pequeñas comunidades rurales que fueron dando forma a la identidad del municipio.","puebloParrafo2":"Esa identidad sigue muy presente hoy: un pueblo donde la vida social, las familias y las actividades deportivas tienen un papel importante. En ese contexto, el fútbol se ha convertido en una forma de unión entre generaciones, vecinos y jugadores que comparten algo más que un escudo.","puebloParrafo3":"El C.D. Unión Deportiva Villar del Olmo representa esa conexión entre pueblo y deporte: competir con orgullo, formar desde la base y mantener vivo el sentimiento de pertenencia."}', 'json', 'Contenido de la página Historia'),
+  ('pagina_contacto', '{"tituloLinea1":"PONTE EN","tituloLinea2":"CONTACTO","subtitulo":"Estamos aquí para resolver cualquier duda sobre inscripciones, equipos o actividades del club."}', 'json', 'Contenido de la página Contacto'),
+  ('pagina_socios', '{"heroBadge":"Hazte Socio","heroTituloLinea1":"Únete a la","heroTituloLinea2":"Familia Verde","heroDescripcion":"Más que un club, una comunidad. Tu apoyo hace posible que sigamos formando deportistas y creando recuerdos.","heroBotonTexto":"Quiero ser socio","heroBotonUrl":"/contacto","miembroTitulo":"¿Ya eres socio?","miembroDescripcion":"Accede a tu área personal para gestionar tu membresía, ver tu historial y mucho más.","miembroBotonTexto":"Acceder a mi cuenta","miembroBotonUrl":"/socios/login"}', 'json', 'Contenido de la página Hazte Socio'),
+  ('pagina_instalaciones', '{"tituloLinea1":"NUESTRAS","tituloLinea2":"INSTALACIONES","subtitulo":"Instalaciones modernas al servicio del fútbol base y de toda la comunidad de Villar del Olmo."}', 'json', 'Cabecera de la página Instalaciones'),
+  ('pagina_equipos', '{"tituloLinea1":"NUESTROS","tituloLinea2":"EQUIPOS","subtitulo":"Equipos federados que representan los colores del club cada fin de semana."}', 'json', 'Cabecera de la página Equipos'),
+  ('pagina_historia_timeline', '[{"anio":"1970","evento":"Fundación del club por un grupo de vecinos apasionados"},{"anio":"1985","evento":"Inauguración del campo municipal"},{"anio":"2000","evento":"Creación de la escuela de fútbol base"},{"anio":"2015","evento":"Renovación completa de instalaciones"},{"anio":"2020","evento":"Celebración del 50 aniversario"}]', 'json', 'Línea de tiempo de la página Historia'),
+  ('pagina_historia_valores', '[{"numero":"01","titulo":"FORMACIÓN","descripcion":"Nuestro principal objetivo es formar futbolistas y personas con valores."},{"numero":"02","titulo":"RESPETO","descripcion":"El respeto a compañeros, rivales y árbitros es fundamental en nuestro club."},{"numero":"03","titulo":"COMUNIDAD","descripcion":"Somos parte activa del tejido social de Villar del Olmo."},{"numero":"04","titulo":"PASIÓN","descripcion":"El amor por el fútbol y por nuestros colores nos define."}]', 'json', 'Valores del club (página Historia)'),
+  ('pagina_instalaciones_lista', '[{"nombre":"Vestuarios","descripcion":"Vestuarios completamente renovados con todas las comodidades para los jugadores y cuerpo técnico del club.","imagen":"/images/instalacion-vestuarios.jpg"},{"nombre":"Campo de Juego","descripcion":"Césped artificial de última generación homologado para competición federada, con medidas reglamentarias.","imagen":"/images/instalacion-campo.jpg"},{"nombre":"Gradas","descripcion":"Gradas con capacidad para los aficionados que nos acompañan en los partidos de local.","imagen":"/images/instalacion-gradas.jpg"}]', 'json', 'Lista de instalaciones')
+ON CONFLICT (clave) DO NOTHING;
+
+-- ============================================
+-- FIN DE LA MIGRACIÓN
+-- ============================================
