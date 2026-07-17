@@ -74,7 +74,7 @@ function AdminLoginForm() {
             <Input
               id="email"
               type="email"
-              placeholder="admin@udvillardelolmo.com"
+              placeholder="tu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required

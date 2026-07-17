@@ -323,7 +323,7 @@ STABLE
 AS $$
   SELECT (auth.jwt() ->> 'email') IN (
     'mpweblabs@gmail.com',
-    'admin@villardelolmo.es'
+    'admin@udvillardelolmo.es'
   );
 $$;
 
