@@ -55,7 +55,7 @@ export function Footer() {
                 </div>
               </Link>
               <p className="text-background/60 leading-relaxed max-w-sm mb-8">
-                Formando futbolistas y personas en el corazón de Madrid desde 1970.
+                Formando futbolistas y personas en el corazón de Madrid desde 1987.
                 Décadas de historia y pasión por el fútbol base.
               </p>
               {activeSocialLinks.length > 0 && (
