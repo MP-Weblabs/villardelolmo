@@ -20,10 +20,10 @@ const cookiesTecnicas = [
 
 const cookiesTerceros = [
   {
-    nombre: "Cookies de Google Maps",
-    proveedor: "Google",
+    nombre: "Cookies de OpenStreetMap",
+    proveedor: "OpenStreetMap Foundation",
     finalidad: "Mostrar el mapa interactivo de la ubicación del club en la página de Contacto.",
-    duracion: "Variable, gestionada por Google",
+    duracion: "Variable, gestionada por OpenStreetMap",
   },
 ]
 

@@ -10,18 +10,25 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowLeft, ArrowRight, Mail, MapPin, Phone, Send, CheckCircle, AlertCircle } from "lucide-react"
+import { ArrowLeft, ArrowRight, ArrowUpRight, Mail, MapPin, Phone, Send, CheckCircle, AlertCircle } from "lucide-react"
 import { useCookieConsent } from "@/lib/cookie-consent"
 import { useSiteInfo } from "@/lib/hooks/use-site-info"
 import { createBrowserClient } from "@/lib/supabase/client"
 import { DEFAULT_CONTACTO, DIRECCION_CLUB, parseContacto, parseJsonSafe, type ContactoContent } from "@/lib/site-content"
 
-// URL de embed de Google Maps sin API key: busca la dirección del club y
-// centra el mapa en ella, mostrando el mismo mapa interactivo que
-// maps.google.com (arrastrar, zoom, "Cómo llegar"...).
-const MAPS_EMBED_SRC = `https://www.google.com/maps?q=${encodeURIComponent(
+// Coordenadas del municipio de Villar del Olmo, Madrid.
+const CLUB_LAT = 40.3363814
+const CLUB_LON = -3.2355624
+
+// Mapa embebido con OpenStreetMap: no requiere API key ni cuenta de Google,
+// así que no se puede bloquear como el embed gratuito de Google Maps.
+const MAP_BBOX = [CLUB_LON - 0.006, CLUB_LAT - 0.006, CLUB_LON + 0.006, CLUB_LAT + 0.006].join(",")
+const MAPS_EMBED_SRC = `https://www.openstreetmap.org/export/embed.html?bbox=${MAP_BBOX}&layer=mapnik&marker=${CLUB_LAT},${CLUB_LON}`
+
+// Enlace de salida a Google Maps para pedir indicaciones reales.
+const GOOGLE_MAPS_DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
   DIRECCION_CLUB.replace("\n", ", ")
-)}&output=embed`
+)}`
 
 export default function ContactoPage() {
   const { consent, accept } = useCookieConsent()
@@ -173,25 +180,35 @@ export default function ContactoPage() {
                   </div>
 
                   {/* Map */}
-                  <div className="aspect-[4/3] bg-muted overflow-hidden">
+                  <div className="aspect-[4/3] bg-muted overflow-hidden relative">
                     {consent === "accepted" ? (
-                      <iframe
-                        src={MAPS_EMBED_SRC}
-                        width="100%"
-                        height="100%"
-                        style={{ border: 0 }}
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        title="Ubicación del club"
-                        className="grayscale hover:grayscale-0 transition-all duration-500"
-                      />
+                      <>
+                        <iframe
+                          src={MAPS_EMBED_SRC}
+                          width="100%"
+                          height="100%"
+                          style={{ border: 0 }}
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                          title="Ubicación del club"
+                          className="grayscale hover:grayscale-0 transition-all duration-500"
+                        />
+                        <a
+                          href={GOOGLE_MAPS_DIRECTIONS_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-background text-foreground text-xs font-semibold uppercase tracking-[0.1em] px-4 py-2.5 shadow-lg hover:bg-primary hover:text-white transition-colors"
+                        >
+                          Cómo llegar
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </a>
+                      </>
                     ) : (
                       <div className="w-full h-full flex flex-col items-center justify-center gap-4 p-8 text-center">
                         <MapPin className="h-8 w-8 text-muted-foreground/50" />
                         <p className="text-sm text-muted-foreground max-w-xs">
-                          El mapa lo proporciona Google y solo se carga si aceptas las cookies de
-                          terceros.
+                          El mapa lo proporciona OpenStreetMap y solo se carga si aceptas las cookies
+                          de terceros.
                         </p>
                         <Button type="button" variant="outline" size="sm" onClick={accept}>
                           Aceptar y ver el mapa

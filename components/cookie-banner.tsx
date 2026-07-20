@@ -23,7 +23,7 @@ export function CookieBanner() {
             <p className="text-sm text-background/80 flex-1 leading-relaxed">
               Usamos cookies técnicas necesarias para que la web funcione (por ejemplo, para mantener
               tu sesión si entras como socio o administrador). Si lo aceptas, también activaremos el
-              mapa de Google incrustado en la página de Contacto. Puedes leer más en nuestra{" "}
+              mapa incrustado en la página de Contacto. Puedes leer más en nuestra{" "}
               <Link href="/cookies" className="underline hover:text-background">
                 Política de Cookies
               </Link>.
