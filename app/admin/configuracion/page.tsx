@@ -29,7 +29,6 @@ type Config = {
   descripcion: string
   email: string
   telefono: string
-  direccion: string
   horario: string
   facebook: string
   instagram: string
@@ -45,7 +44,6 @@ const DEFAULTS: Config = {
   descripcion: "Club de fútbol de Villar del Olmo, Madrid.",
   email: "",
   telefono: "",
-  direccion: "",
   horario: "",
   facebook: "",
   instagram: "",
@@ -232,8 +230,13 @@ export default function AdminConfiguracionPage() {
                   <Input id="telefono" value={config.telefono} onChange={(e) => update("telefono", e.target.value)} />
                 </div>
                 <div className="space-y-2 sm:col-span-2">
-                  <Label htmlFor="direccion">Dirección</Label>
-                  <Input id="direccion" value={config.direccion} onChange={(e) => update("direccion", e.target.value)} />
+                  <Label>Dirección</Label>
+                  <p className="text-sm text-zinc-500 border border-zinc-200 rounded-lg px-3 py-2 bg-zinc-50 whitespace-pre-line">
+                    Campo Municipal de Fútbol{"\n"}28511 Villar del Olmo, Madrid
+                  </p>
+                  <p className="text-xs text-zinc-400">
+                    La dirección del campo es fija y no se puede editar desde aquí.
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="horario">Horario de atención</Label>

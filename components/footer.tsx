@@ -4,7 +4,7 @@ import Link from "next/link"
 import { ClubLogo } from "./club-logo"
 import { ArrowUpRight, Facebook, Instagram, Twitter, Youtube } from "lucide-react"
 import { useSiteInfo } from "@/lib/hooks/use-site-info"
-import type { SiteInfo } from "@/lib/site-content"
+import { DIRECCION_CLUB, type SiteInfo } from "@/lib/site-content"
 
 const navigation = {
   principal: [
@@ -120,7 +120,7 @@ export function Footer() {
                 Contacto
               </h3>
               <address className="not-italic space-y-4 text-sm text-background/70">
-                <p className="whitespace-pre-line">{siteInfo.direccion}</p>
+                <p className="whitespace-pre-line">{DIRECCION_CLUB}</p>
                 <p className="pt-2">
                   <a
                     href={`mailto:${siteInfo.email}`}

@@ -14,7 +14,14 @@ import { ArrowLeft, ArrowRight, Mail, MapPin, Phone, Send, CheckCircle, AlertCir
 import { useCookieConsent } from "@/lib/cookie-consent"
 import { useSiteInfo } from "@/lib/hooks/use-site-info"
 import { createBrowserClient } from "@/lib/supabase/client"
-import { DEFAULT_CONTACTO, parseContacto, parseJsonSafe, type ContactoContent } from "@/lib/site-content"
+import { DEFAULT_CONTACTO, DIRECCION_CLUB, parseContacto, parseJsonSafe, type ContactoContent } from "@/lib/site-content"
+
+// URL de embed de Google Maps sin API key: busca la dirección del club y
+// centra el mapa en ella, mostrando el mismo mapa interactivo que
+// maps.google.com (arrastrar, zoom, "Cómo llegar"...).
+const MAPS_EMBED_SRC = `https://www.google.com/maps?q=${encodeURIComponent(
+  DIRECCION_CLUB.replace("\n", ", ")
+)}&output=embed`
 
 export default function ContactoPage() {
   const { consent, accept } = useCookieConsent()
@@ -132,7 +139,7 @@ export default function ContactoPage() {
                   
                   <div className="space-y-6 mb-12">
                     {[
-                      { icon: MapPin, label: "Dirección", value: siteInfo.direccion },
+                      { icon: MapPin, label: "Dirección", value: DIRECCION_CLUB },
                       { icon: Mail, label: "Email", value: siteInfo.email, href: `mailto:${siteInfo.email}` },
                       { icon: Phone, label: "Teléfono", value: siteInfo.telefono, href: `tel:${siteInfo.telefono.replace(/[^0-9+]/g, "")}` },
                     ].map((item, index) => (
@@ -169,7 +176,7 @@ export default function ContactoPage() {
                   <div className="aspect-[4/3] bg-muted overflow-hidden">
                     {consent === "accepted" ? (
                       <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6078.8!2d-3.23!3d40.36!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422e7c8c!2sVillar%20del%20Olmo!5e0!3m2!1ses!2ses!4v1"
+                        src={MAPS_EMBED_SRC}
                         width="100%"
                         height="100%"
                         style={{ border: 0 }}

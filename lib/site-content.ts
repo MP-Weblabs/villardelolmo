@@ -84,7 +84,6 @@ export const DEFAULT_CTA: CtaContent = {
 export type SiteInfo = {
   email: string
   telefono: string
-  direccion: string
   facebook: string
   instagram: string
   twitter: string
@@ -94,12 +93,16 @@ export type SiteInfo = {
 export const DEFAULT_SITE_INFO: SiteInfo = {
   email: "villardelolmo.ud@gmail.com",
   telefono: "+34677549050",
-  direccion: "Campo Municipal de Fútbol\n28511 Villar del Olmo, Madrid",
   facebook: "",
   instagram: "",
   twitter: "",
   youtube: "",
 }
+
+// Dirección del campo. Fija en el código a propósito: no es editable desde
+// el panel de admin ni se lee de Supabase, para que siempre se muestre en
+// formato de dirección postal y el mapa de contacto apunte al sitio correcto.
+export const DIRECCION_CLUB = "Campo Municipal de Fútbol\n28511 Villar del Olmo, Madrid"
 
 export type HistoriaContent = {
   tituloLinea1: string
@@ -319,7 +322,6 @@ export function parseSiteInfo(raw: unknown): SiteInfo {
   return {
     email: sanitizeEmail(r.email) ?? DEFAULT_SITE_INFO.email,
     telefono: sanitizePhone(r.telefono) ?? DEFAULT_SITE_INFO.telefono,
-    direccion: sanitizeText(r.direccion, 300) || DEFAULT_SITE_INFO.direccion,
     facebook: sanitizeUrl(r.facebook) ?? "",
     instagram: sanitizeUrl(r.instagram) ?? "",
     twitter: sanitizeUrl(r.twitter) ?? "",
